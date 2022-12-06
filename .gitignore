@@ -1,0 +1,44 @@
+# gitignore for Pose2Art
+# from PC git (py/td)
+venv/
+.DS_Store
+.idea/
+Backup/
+
+# from rPi git (c++ etc)
+bin/
+obj/
+*.layout
+
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
