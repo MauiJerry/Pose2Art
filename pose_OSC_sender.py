@@ -3,6 +3,8 @@ import random
 import numpy as np
 import time
 from pythonosc import udp_client
+from pythonosc import osc_bundle_builder
+from pythonosc import osc_message_builder
 
 # Create our UDP client which we'll send OSC through
 # Change the URL and port to whatever fits your needs
@@ -70,7 +72,29 @@ def moveLandmarks():
         pt.y = pt.y + random.uniform(-yRange, yRange)
         pt.z = pt.z + random.uniform(-zRange, zRange)
 
-#def sendBundle():
+def sendBundle():
+    bundle = osc_bundle_builder.OscBundleBuilder(
+        osc_bundle_builder.IMMEDIATELY)
+    msg = osc_message_builder.OscMessageBuilder(address="/SYNC")
+    msg.add_arg(4.0)
+    # Add 4 messages in the bundle, each with more arguments.
+    bundle.add_content(msg.build())
+    msg.add_arg(2)
+    bundle.add_content(msg.build())
+    msg.add_arg("value")
+    bundle.add_content(msg.build())
+    msg.add_arg(b"\x01\x02\x03")
+    bundle.add_content(msg.build())
+
+    sub_bundle = bundle.build()
+    # Now add the same bundle inside itself.
+    bundle.add_content(sub_bundle)
+    # The bundle has 5 elements in total now.
+
+    bundle = bundle.build()
+    print("Bundle is ", bundle)
+    client.send(bundle)
+
 
 # main loop
 initialLandmarks()
@@ -81,4 +105,5 @@ while True:
     moveLandmarks()
     sendPoseFrameInfo()
     sendPoseLandmarks()
+    sendBundle()
     time.sleep(1)
