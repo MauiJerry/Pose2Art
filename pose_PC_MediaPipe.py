@@ -1,5 +1,7 @@
 # modified from orig: new URL, added OSC msgs for image h,w, numchannels
 # forked from https://github.com/cronin4392/TouchDesigner-OpenCV-OSC
+import time
+
 import cv2
 import mediapipe as mp
 from pythonosc import udp_client
@@ -26,6 +28,7 @@ def adjustY(y, w, h):
 
 num_landmarks =0
 while True:
+    startTime = time.time()
     success, img = cap.read()
     imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     image_height, image_width, _ = imgRGB.shape
@@ -43,7 +46,7 @@ while True:
         client.send_message(f"/image-height", image_height)
         client.send_message(f"/image-width", image_width)
         client.send_message(f"/numLandmarks", num_landmarks)
-        print("height, width, num marks", image_height, image_width,num_landmarks)
+        #print("height, width, num marks", image_height, image_width,num_landmarks)
 
         for id, lm in enumerate(results.pose_landmarks.landmark):
             x = lm.x
@@ -59,5 +62,9 @@ while True:
             cx, cy = int(x * image_width), int(y * image_height)
             cv2.circle(img, (cx, cy), 5, (255,0,0), cv2.FILLED)
 
+    endTime = time.time()
+    elapsedTime = endTime - startTime
+    fps = 1.0/elapsedTime
+    print("Frame Rate %.2f Elapsed %.2f" % (fps,elapsedTime))
     cv2.imshow("Image", img)
     cv2.waitKey(1)
