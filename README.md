@@ -1,4 +1,4 @@
-s# Pose2Art: smartCamera Pose to TouchDesigner etc
+# Pose2Art: smartCamera Pose to TouchDesigner etc
 
 Pose2Art creates an AI Camera run on small 'edge' device that extract Pose and sends tracked points via OSC to TouchDesigner and Unity/UnReal for ART!
 
@@ -11,7 +11,7 @@ Initially, one of two OpenCV+PoseEsitimation tools capture frames, extract Pose 
 - **pose_rPi_TFLite.cpp** is raspberryPi4 c++ program, sending 17 landmarks  
 - **poseOSC_dots.toe** is a simple TouchDesigner app that reads the osc landmark messages and displays them as dots.  
 
-**pose_OSC_Sender.py** is a python app for testing OSC Messages. Initially it sends 17 or 33 landmarks plus the Frame messages. A sendBundle() is provided to test if receivers can handle OSC Bundles.
+- **pose_OSC_Sender.py** is a python app for testing OSC Messages. Initially it sends 17 or 33 landmarks plus the Frame messages. A sendBundle() is provided to test if receivers can handle OSC Bundles.
 
 # Critique
 
