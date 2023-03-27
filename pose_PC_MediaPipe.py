@@ -18,18 +18,22 @@ mpPose = mp.solutions.pose
 pose = mpPose.Pose()
 mpDraw = mp.solutions.drawing_utils
 
-# Initialize our video source. It can be a file or a webcam.
-cap = cv2.VideoCapture(0)
-# cap = cv2.VideoCapture('dancing.mp4')
-
 # Helper function to normalize direction and scale of y axis for TouchDesigner
 def adjustY(y, w, h):
     return (1 - y) * (h / w)
+
+
+# Initialize our video source. It can be a file or a webcam.
+# cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture('BakingBrains_a.mp4')
 
 num_landmarks =0
 while True:
     startTime = time.time()
     success, img = cap.read()
+    if success != True:
+        print("Read Failed,End of File?")
+        break # end of file, reload/repeat
     imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     image_height, image_width, _ = imgRGB.shape
     results = pose.process(imgRGB)
