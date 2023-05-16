@@ -106,4 +106,4 @@ while True:
     sendPoseFrameInfo()
     sendPoseLandmarks()
     sendBundle()
-    time.sleep(1)
+    time.sleep()

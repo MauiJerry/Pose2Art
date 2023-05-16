@@ -9,7 +9,8 @@ from pythonosc import udp_client
 # Create our UDP client which we'll send OSC through
 # Change the URL and port to whatever fits your needs
 # mauiJerry: use our PC's static ip in prep for running on Raspberry Pi
-UDP_URL = "10.10.10.10" #"127.0.0.1"
+#UDP_URL = "10.10.10.10" #"127.0.0.1"
+UDP_URL = "127.0.0.1"
 UDP_PORT = 5005
 client = udp_client.SimpleUDPClient(UDP_URL, UDP_PORT)
 
@@ -24,8 +25,8 @@ def adjustY(y, w, h):
 
 
 # Initialize our video source. It can be a file or a webcam.
-# cap = cv2.VideoCapture(0)
-cap = cv2.VideoCapture('BakingBrains_a.mp4')
+cap = cv2.VideoCapture(0)
+# cap = cv2.VideoCapture('BakingBrains_a.mp4')
 
 num_landmarks =0
 while True:
