@@ -81,10 +81,10 @@ while True:
     # Initialize our video source. It can be a file or a webcam.
     # cap = cv2.VideoCapture(0)
     #cap = cv2.VideoCapture('videos/BakingBrains_a.mp4')
-    cap = cv2.VideoCapture('videos/JustSomeMotion.mov')
+    #cap = cv2.VideoCapture('videos/JustSomeMotion.mov')
     #cap = cv2.VideoCapture('videos/body made of water.mov')
     #cap = cv2.VideoCapture('videos/Coreografia.mov')
-    #cap = cv2.VideoCapture('videos/Fred Astaire Oscars.mov')
+    cap = cv2.VideoCapture('videos/Fred Astaire Oscars.mov')
     frameCount = 0
     loopCount = loopCount + 1
 
@@ -119,13 +119,15 @@ while True:
                 cv2.circle(img, (cx, cy), 5, (255,0,0), cv2.FILLED)
 
                 point_name = pose_id_to_name.get(id)
-                # Send our values over OSC once w/all 3 values, then each separate
+                # Send our values over OSC once w/all 3 values in one msg
+                # this saves in the comm layers at expense of parsing in TD
                 # note using uv screen space soords rather than xyz
                 # and z is actually Confidence
                 client.send_message(f"/p1/{point_name}", [lm.x,lm.y,lm.z])
-                client.send_message(f"/p1/{point_name}:u", lm.x)
-                client.send_message(f"/p1/{point_name}:v", lm.y)#adjustY(lm.y, image_width, image_height))
-                client.send_message(f"/p1/{point_name}:tz", lm.z)
+                # could send as 3 OSC msgs to better match kinect names
+                #client.send_message(f"/p1/{point_name}:u", lm.x)
+                #client.send_message(f"/p1/{point_name}:v", lm.y)#adjustY(lm.y, image_width, image_height))
+                #client.send_message(f"/p1/{point_name}:tz", lm.z)
 
         endTime = time.time()
         elapsedTime = endTime - startTime
