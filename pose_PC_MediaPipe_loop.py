@@ -80,11 +80,11 @@ while True:
     #now doing this in a loop so we replay video indefintely
     # Initialize our video source. It can be a file or a webcam.
     # cap = cv2.VideoCapture(0)
-    #cap = cv2.VideoCapture('Vids/BakingBrains_a.mp4')
-    cap = cv2.VideoCapture('Vids/JustSomeMotion.mov')
-    #cap = cv2.VideoCapture('Vids/body made of water.mov')
-    #cap = cv2.VideoCapture('Vids/Coreografia.mov')
-    #cap = cv2.VideoCapture('Vids/Fred Astaire Oscars.mov')
+    #cap = cv2.VideoCapture('videos/BakingBrains_a.mp4')
+    cap = cv2.VideoCapture('videos/JustSomeMotion.mov')
+    #cap = cv2.VideoCapture('videos/body made of water.mov')
+    #cap = cv2.VideoCapture('videos/Coreografia.mov')
+    #cap = cv2.VideoCapture('videos/Fred Astaire Oscars.mov')
     frameCount = 0
     loopCount = loopCount + 1
 
@@ -120,9 +120,11 @@ while True:
 
                 point_name = pose_id_to_name.get(id)
                 # Send our values over OSC once w/all 3 values, then each separate
+                # note using uv screen space soords rather than xyz
+                # and z is actually Confidence
                 client.send_message(f"/p1/{point_name}", [lm.x,lm.y,lm.z])
-                client.send_message(f"/p1/{point_name}:tx", lm.x)
-                client.send_message(f"/p1/{point_name}:ty", adjustY(lm.y, image_width, image_height))
+                client.send_message(f"/p1/{point_name}:u", lm.x)
+                client.send_message(f"/p1/{point_name}:v", lm.y)#adjustY(lm.y, image_width, image_height))
                 client.send_message(f"/p1/{point_name}:tz", lm.z)
 
         endTime = time.time()
