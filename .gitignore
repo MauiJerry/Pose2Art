@@ -4,6 +4,8 @@ venv/
 .DS_Store
 .idea/
 Backup/
+tests/
+videos/
 
 # from rPi git (c++ etc)
 bin/
