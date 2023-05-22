@@ -1,7 +1,7 @@
 import cv2
 from pythonosc import udp_client
 
-from ..pose_detector import PoseDetectorMediapipe
+from pose_detector import PoseDetectorMediapipe
 
 pose_detector = PoseDetectorMediapipe()
 
