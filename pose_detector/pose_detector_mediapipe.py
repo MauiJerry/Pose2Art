@@ -46,9 +46,12 @@ class PoseDetectorMediapipe(PoseDetector):
         self.pose = self.mp_pose.Pose()
         self.mpDraw = mp.solutions.drawing_utils
         self.results = None
+        self.frameCount = 0
 
     def process_image(self, image):
         self.results = self.pose.process(image)
+        self.image_height, self.image_width, _ = image.shape
+        self.frameCount += 1
         return self.results
 
     def get_num_landmarks(self):
@@ -71,9 +74,24 @@ class PoseDetectorMediapipe(PoseDetector):
         return self.pose_id_to_name.get(pose_id, "Unknown")
 
     def send_landmarks_via_osc(self, osc_client):
+        if osc_client is None:
+            print("osc_client is None")
+            return
+        try:
+            osc_client.send_message("/framecount", self.frameCount)
+        except Exception as e:
+            print("Error: Cannot send OSC message", e)
+
+        osc_client.send_message(f"/image-height", self.image_height)
+        osc_client.send_message(f"/image-width", self.image_width)
+        print("height, width, num marks", self.image_height, self.image_width, self.get_num_landmarks())
+
         if self.results is not None:
             if self.results.pose_landmarks is not None:
                 for idx, lm in enumerate(self.results.pose_landmarks.landmark):
-                    osc_client.send_message(f"p1/{self.get_pose_name(idx)}", [lm.x, lm.y, lm.z])
-
-
+                    osc_client.send_message(f"/p1/{self.get_pose_name(idx)}", [lm.x, lm.y, lm.z])
+                osc_client.send_message(f"/numLandmarks", len(self.results.pose_landmarks.landmark))
+            else:
+                print("results.pose_landmarks is None")
+        else:
+            print("results is None")
