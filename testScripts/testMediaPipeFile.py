@@ -1,30 +1,34 @@
-import cv2, sys
-from pythonosc import udp_client
-import NDIlib as ndi
-
-from pose_detector import PoseDetectorMediapipe
+import sys
 import time, os
+import numpy as np
+import cv2
+import NDIlib as ndi
+from pythonosc import udp_client
+from pose_detector import PoseDetectorMediapipe
 
 def main():
     UDP_URL = "127.0.0.1"
     UDP_PORT = 5005
     client = udp_client.SimpleUDPClient(UDP_URL, UDP_PORT)
+    try:
+        client.send_message("/test", 1.0)
+    except Exception as e:
+        print("Error: Cannot send OSC message", e)
+
 
     # Open file
     #cap = cv2.VideoCapture(0)
     filename = 'videos/Fred Astaire Oscars.mov'
     #filename = 'videos/BakingBrains_a.mp4'
 
-
     try:
-        ret, cap = cv2.VideoCapture(filename)
-        if not ret:
+        cap = cv2.VideoCapture(filename)
+        if cap is None or not cap.isOpened():
             print("Video capture failed")
             exit()
     except Exception as e:
         print("Video capture exception ", e)
         exit()
-
     print("Opened ",filename)
     frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
@@ -39,7 +43,7 @@ def main():
        exit()
 
     send_settings = ndi.SendCreate()
-    send_settings.ndi_name = 'ndi-python'
+    send_settings.ndi_name = 'posePC'
     ndi_send = ndi.send_create(send_settings)
     video_frame = ndi.VideoFrameV2()
 
@@ -63,6 +67,7 @@ def main():
         frameNum = frameNum +1
 
         img = cv2.cvtColor(frame, cv2.COLOR_BGR2BGRA)
+        #frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
         video_frame.data = img
         video_frame.FourCC = ndi.FOURCC_VIDEO_TYPE_BGRX
@@ -75,6 +80,10 @@ def main():
         # Draw landmarks on the frame
         pose_detector.draw_landmarks(frame)
         pose_detector.send_landmarks_via_osc(client)
+        try:
+            client.send_message("/test", frameNum)
+        except Exception as e:
+            print("Error: Cannot send OSC message", e)
 
         # Display the frame
         cv2.imshow('Video', frame)

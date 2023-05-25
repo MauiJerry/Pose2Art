@@ -148,10 +148,7 @@ class PoseApp:
     def start_ndi(self):
         send_settings = ndi.SendCreate()
         send_settings.ndi_name =  self.ndi_out_name.get()
-        #self.send_settings.ndi_name = self.ndi_out_name.get()
-        #self.ndi_send = ndi.sender_create(self.ndi_out_name.get())
         self.ndi_send = ndi.send_create(send_settings)
-
         self.video_frame = ndi.VideoFrameV2()
 
         self.start_ndi_button.config(state=tk.DISABLED)
