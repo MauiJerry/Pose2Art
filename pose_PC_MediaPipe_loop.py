@@ -98,25 +98,22 @@ while True:
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         image_height, image_width, _ = imgRGB.shape
         results = pose.process(imgRGB)
+        num_landmarks = len(results.pose_landmarks.landmark)
+        print("height, width, num marks", image_height, image_width, num_landmarks)
 
         if results.pose_landmarks:
-            # first time, count number of landmarks pose model finds
-            if num_landmarks < 1:
-                # how do we get len/size of landmarks?
-                for id, lm in enumerate(results.pose_landmarks.landmark):
-                    num_landmarks = num_landmarks+1
             # draw landmark connection lines (skeleton)
             mpDraw.draw_landmarks(img, results.pose_landmarks, mpPose.POSE_CONNECTIONS)
 
             client.send_message(f"/image-height", image_height)
             client.send_message(f"/image-width", image_width)
             client.send_message(f"/numLandmarks", num_landmarks)
-            print("height, width, num marks", image_height, image_width,num_landmarks)
+            #print("height, width, num marks", image_height, image_width, num_landmarks)
 
             for id, lm in enumerate(results.pose_landmarks.landmark):
                 # Draw circles on the pose areas. This is purely for debugging
-                cx, cy = int(lm.x * image_width), int(lm.y * image_height)
-                cv2.circle(img, (cx, cy), 5, (255,0,0), cv2.FILLED)
+                #cx, cy = int(lm.x * image_width), int(lm.y * image_height)
+                #cv2.circle(img, (cx, cy), 5, (255,0,0), cv2.FILLED)
 
                 point_name = pose_id_to_name.get(id)
                 # Send our values over OSC once w/all 3 values in one msg
@@ -124,6 +121,8 @@ while True:
                 # note using uv screen space soords rather than xyz
                 # and z is actually Confidence
                 client.send_message(f"/p1/{point_name}", [lm.x,lm.y,lm.z])
+                if point_name == 'handtip_l':
+                    print("handtip_l: ",lm.x,lm.y,lm.z)
                 # could send as 3 OSC msgs to better match kinect names
                 #client.send_message(f"/p1/{point_name}:u", lm.x)
                 #client.send_message(f"/p1/{point_name}:v", lm.y)#adjustY(lm.y, image_width, image_height))
