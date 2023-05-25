@@ -16,6 +16,6 @@ class PoseDetectorAlphaPose(PoseDetector):
         # Draw the pose landmarks on the image (optional)
         pass
 
-    def send_landmarks_via_osc(self, osc_client, channel_prefix):
+    def send_landmarks_via_osc(self, osc_client):
         # Send the pose landmarks via OSC (Open Sound Control)
         pass

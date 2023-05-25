@@ -70,8 +70,8 @@ class PoseDetectorMediapipe(PoseDetector):
                     landmarks,
                     self.mp_pose.POSE_CONNECTIONS)
 
-    def get_pose_name(self, pose_id):
-        return self.pose_id_to_name.get(pose_id, "Unknown")
+    def get_landmark_name(self, landmark_id):
+        return self.pose_id_to_name.get(landmark_id, "Unknown")
 
     def send_landmarks_via_osc(self, osc_client):
         if osc_client is None:
@@ -89,7 +89,7 @@ class PoseDetectorMediapipe(PoseDetector):
         if self.results is not None:
             if self.results.pose_landmarks is not None:
                 for idx, lm in enumerate(self.results.pose_landmarks.landmark):
-                    osc_client.send_message(f"/p1/{self.get_pose_name(idx)}", [lm.x, lm.y, lm.z])
+                    osc_client.send_message(f"/p1/{self.get_landmark_name(idx)}", [lm.x, lm.y, lm.z])
                 osc_client.send_message(f"/numLandmarks", len(self.results.pose_landmarks.landmark))
             else:
                 print("results.pose_landmarks is None")

@@ -2,16 +2,32 @@
 
 Pose2Art creates an AI Camera run on small 'edge' device that extract Pose and sends tracked points via OSC to TouchDesigner and Unity/UnReal for ART!
 
-The project is documented in longer form in the Hackaday.io project [Pose2Art: SmartCam to TouchDesigner, Unity via OSC](https://hackaday.io/project/188345-pose2art-smartcam-to-touchdesigner-unity-via-osc) Installation is a bit complex, so see that project the how-to as well as discussion of details of the code, etc.
+The project is documented in longer form in the Hackaday.io project [Pose2Art: SmartCam to TouchDesigner, Unity via OSC](https://hackaday.io/project/188345-pose2art-smartcam-to-touchdesigner-unity-via-osc) Installation is a bit complex, so see that project the how-to as well as discussion of details of the code, etc. 
+As of May 2023, this repo is ahead of Hackaday project,
 
-See related repo [pyUdpTest](https://github.com/MauiJerry/pyUdpTest) for udp sender/receiver tests. These can be used to test both the udp connection, and as receiver of OSC messages.
+See related repo [pyUdpTest](https://github.com/MauiJerry/pyUdpTest) for udp sender/receiver tests. These can be used to test both the udp connection, and as receiver of OSC messages. (TL:DR turn off windows defender)
 
 Initially, one of two OpenCV+PoseEsitimation tools capture frames, extract Pose Landmarks and send via OSC Messages to a TouchDesigner application. 
 - **pose_PC_MediaPipe.py** is a python tool for PC, sending 33 landmarks 
 - **pose_rPi_TFLite.cpp** is raspberryPi4 c++ program, sending 17 landmarks  
-- **poseOSC_dots.toe** is a simple TouchDesigner app that reads the osc landmark messages and displays them as dots.  
-
+- **poseOSC_dots.toe** is a simple TouchDesigner app that reads the osc landmark messages and displays them as dots.
 - **pose_OSC_Sender.py** is a python app for testing OSC Messages. Initially it sends 17 or 33 landmarks plus the Frame messages. A sendBundle() is provided to test if receivers can handle OSC Bundles.
+
+May2023: 
+- created **pose_detector** package (subfolder) 
+    - **pose_detector.py**: PoseDetector base class
+	- **pose_detector_mediapipe**: PoseDetectorMediapipe version
+	- **alphapose.py** : stub that might support alphapose
+- **posePCGui.py**: TK gui over pose_detector; select webcam/file, ndi name, osc IP/port, loop video. Displays in TK window as well as sending osc and orig image via ndi
+- **handDrawing.toe**: revision of example from HQPro to use OSC instead of kinect (part of paid course)
+-- [Immersive Design & Creative Technology Mini-Degree/Pillars/Kinect 2 Fundamentals/05 - Drawing with Kinect Skeleton Data](https://hqpro.interactiveimmersive.io/products/immersive-design-creative-technology-mini-degree/categories/2151460601/posts/2162173127)
+- **handDrawing_wNDI.toe**: TD app maps over ndi from posePCGui 
+- **testScripts folder** added with some scaffolding tests
+    * oscServer.py: pythonosc server that prints received messages
+    * send_capture.py: NDI example with minor changes
+    * testMediaPipe.py: tests PoseDetectorMediapipe with webcam
+    * testMediaPipeFile.py: tests PoseDetectorMediapipe with video file
+    * udpServerPrint.py: udp socket server prints data received
 
 # Critique
 
