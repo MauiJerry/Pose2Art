@@ -4,12 +4,11 @@ input can be the webcam or a file
 send to ndi, and use PoseDetector to collect Pose and send via osc
 """
 
-import cv2
+import cv2, os, time
 import tkinter as tk
 from tkinter import filedialog, Menu
 from PIL import Image, ImageTk
 from pythonosc import udp_client
-import time
 import NDIlib as ndi
 from pose_detector import PoseDetectorMediapipe
 
@@ -23,6 +22,8 @@ class PoseApp:
     def __init__(self, pose_detector):
         global g_webcam, g_file
         self.pose_detector = pose_detector
+
+        self.last_directory ='.'
 
         self.root = tk.Tk()
         self.root.title("Pose App")
@@ -61,12 +62,14 @@ class PoseApp:
 
     def set_video_input_file(self):
         file_path = filedialog.askopenfilename(
-            initialdir= '.',
+            initialdir= self.last_directory,
             title = "Select Video File",
             filetypes = [("Video Files", "*.mp4;*.avi;*.mov"), ("All Files", "*.*")]
         )
-        self.video_input_file.set(file_path)
-        self.video_input_source.set(g_file)
+        if file_path:
+            self.last_directory = os.path.dirname(file_path)
+            self.video_input_file.set(file_path)
+            self.video_input_source.set(g_file)
 
     def build_gui(self):
         menu = Menu(self.root)

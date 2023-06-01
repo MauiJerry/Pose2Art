@@ -1,4 +1,5 @@
 # modified from pose_PC_MediaPipe.py to be generic OSC message testbed
+# out of date - early test. newer versions use pose-detector package
 import random
 import numpy as np
 import time
