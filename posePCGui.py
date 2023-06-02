@@ -304,7 +304,7 @@ class PoseApp:
             end_time = time.time()
             elapsed_time = (end_time - start_time) * 1000  # Convert to milliseconds
             delay = max(self.video_delay - int(elapsed_time), 1)
-            print("elapsed_time {} vidDelay {} remaining delay: {}".format(elapsed_time, self.video_delay,delay))
+            #print("elapsed_time {} vidDelay {} remaining delay: {}".format(elapsed_time, self.video_delay,delay))
             self.root.after(delay, display_frame)
 
         display_frame()

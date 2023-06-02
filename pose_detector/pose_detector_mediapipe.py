@@ -84,7 +84,7 @@ class PoseDetectorMediapipe(PoseDetector):
 
         osc_client.send_message(f"/image-height", self.image_height)
         osc_client.send_message(f"/image-width", self.image_width)
-        print("height, width, num marks", self.image_height, self.image_width, self.get_num_landmarks())
+        #print("height, width, num marks", self.image_height, self.image_width, self.get_num_landmarks())
 
         if self.results is not None:
             if self.results.pose_landmarks is not None:
