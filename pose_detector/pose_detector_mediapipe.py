@@ -11,7 +11,7 @@ class PoseDetectorMediapipe(PoseDetector):
         3: 'mp_eye_outer_l',
         4: 'mp_eye_inner_r',
         5: 'eye_r',
-        6: 'mp_eye_outer_e',
+        6: 'mp_eye_outer_r',
         7: 'mp_ear_l',
         8: 'mp_ear_r',
         9: 'mp_mouth_l',
