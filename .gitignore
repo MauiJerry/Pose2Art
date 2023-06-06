@@ -7,6 +7,8 @@ Backup/
 tests/
 videos/
 
+*/__pycache__
+
 # from rPi git (c++ etc)
 bin/
 obj/
