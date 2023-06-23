@@ -200,7 +200,8 @@ class PoseApp:
         try:
             if self.video_input_source.get() == g_webcam:
                 print("try open webcam")
-                self.cap = cv2.VideoCapture(0)
+                #self.cap = cv2.VideoCapture(0)
+                self.cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
             elif self.video_input_source.get() == g_file:
                 file_path = self.video_input_file.get()
                 print("try open video file: {}".format(file_path))
@@ -233,6 +234,11 @@ class PoseApp:
         self.stop_video_button.config(state=tk.NORMAL)
 
         fps = self.cap.get(cv2.CAP_PROP_FPS)
+        #print("Initial FPS", fps)
+        # fps for webcam may be 0, so set to something useful
+        if fps < 1:
+            fps = 30
+            #print("FPS too small", fps)
         # Calculate the delay based on the frame rate
         self.video_delay = int(1000 / fps)  # Delay in milliseconds
 
@@ -248,7 +254,7 @@ class PoseApp:
         print("running is", self.running)
 
         def display_frame():
-            #print("display_frame {} {} {}".format(self.running, self.frameCount, self.loopcount))
+            print("display_frame {} {} {}".format(self.running, self.frameCount, self.loopcount))
             start_time = time.time()
             if not self.running:
                 print("display_frame: not running, so return")
@@ -266,6 +272,7 @@ class PoseApp:
                     ret, frame = self.cap.read()
                 else:
                     print("not looping video, so break from running loop")
+                    print("GUI should give error dialog here, update ui")
                     self.stop_video()
                     return
 
@@ -286,7 +293,8 @@ class PoseApp:
                 pose_detector.send_landmarks_via_osc(self.osc_client)
                 pose_detector.draw_landmarks(frame)
             else:
-                print("No pose detected", )
+                print("No pose detected")
+                #return
 
             # convert pose+frame image to TK format and display
             # Create a PIL ImageTk object
@@ -304,10 +312,12 @@ class PoseApp:
             end_time = time.time()
             elapsed_time = (end_time - start_time) * 1000  # Convert to milliseconds
             delay = max(self.video_delay - int(elapsed_time), 1)
-            #print("elapsed_time {} vidDelay {} remaining delay: {}".format(elapsed_time, self.video_delay,delay))
+            print("elapsed_time {} vidDelay {} remaining delay: {}".format(elapsed_time, self.video_delay,delay))
             self.root.after(delay, display_frame)
+            print("after root delay", delay)
 
         display_frame()
+        print("End Video")
 
     def stop_video(self):
         print("stop video loop")
