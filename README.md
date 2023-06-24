@@ -2,8 +2,7 @@
 
 Pose2Art creates an AI Camera run on small 'edge' device that extract Pose and sends tracked points via OSC to TouchDesigner and Unity/UnReal for ART!
 
-The project is documented in longer form in the Hackaday.io project [Pose2Art: SmartCam to TouchDesigner, Unity via OSC](https://hackaday.io/project/188345-pose2art-smartcam-to-touchdesigner-unity-via-osc) Installation is a bit complex, so see that project the how-to as well as discussion of details of the code, etc. 
-As of May 2023, this repo is ahead of Hackaday project,
+The project is documented in longer form in the Hackaday.io project [Pose2Art: SmartCam to TouchDesigner, Unity via OSC](https://hackaday.io/project/188345-pose2art-smartcam-to-touchdesigner-unity-via-osc).  It is an evolving project, with the initial setups (esp pushing into Raspberry Pi) being a bit complex, so see that project for the how-to as well as discussion of details of the code, etc. As of May 2023, this repo is ahead of Hackaday project,
 
 See related repo [pyUdpTest](https://github.com/MauiJerry/pyUdpTest) for udp sender/receiver tests. These can be used to test both the udp connection, and as receiver of OSC messages. (TL:DR turn off windows defender)
 
@@ -28,7 +27,17 @@ May2023:
     * testMediaPipe.py: tests PoseDetectorMediapipe with webcam
     * testMediaPipeFile.py: tests PoseDetectorMediapipe with video file
     * udpServerPrint.py: udp socket server prints data received
+ 
+June 2023:
+- ** Adding variety of TouchDesigner prototypes to explore ways to use skeleton in TD.
+    * landmarksAsSpheres.toe - puts a sphere at each landmark (incl face?)
+    * landmarksAsGeom_wNDI.toe - similar to sphere, also rcvs video via NDI
+    * handsAsEmitters.toe - particle emitters at hand tips (vid save to file)
+    * OSC_TubularTrim.toe - make flat/tube skeleton between landmarks
+    * osc_fluidHand.toe - beginnings of putting a fluid  emitter on hands
 
+A number of explorations are NOT in git at this time.  I've been looking into using GLSL fluid sims, advanced TD Particle sims, etc.  Also potential to have a Pose2Art camera that does Hand Tracking and Gestures.
+  
 # Critique
 
 Initially there are 2 hardware SmartCamera for Pose_OSC: a PC's webcam and raspberryPi4.  The PC can do a respectable frame rate with decent graphics board. My PC webcam gets about 28fps, which is decent. The rPi4 about 8-9fps, which is not good enough for interactive work.  Maybe the Jetson Nano or Coral dev boards will be better.  Meanwhile, we at least have a path for getting ML data into TouchDesigner via OSC.  This method could be extended for multiple person tracking (on fast hardware), object detection or other ML processing. The OSC messages will need to change for those new applications, so when you fork this, document them ;-)
