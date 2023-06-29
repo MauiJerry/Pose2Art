@@ -1,8 +1,8 @@
 # Pose2Art: smartCamera Pose to TouchDesigner etc
 
-Pose2Art creates an AI Camera run on small 'edge' device that extract Pose and sends tracked points via OSC to TouchDesigner and Unity/UnReal for ART!
+Pose2Art creates an AI Camera that can run on small 'edge' device that extract Pose and sends tracked points via OSC to TouchDesigner (and Unity/UnReal) for ART!
 
-The project is documented in longer form in the Hackaday.io project [Pose2Art: SmartCam to TouchDesigner, Unity via OSC](https://hackaday.io/project/188345-pose2art-smartcam-to-touchdesigner-unity-via-osc).  It is an evolving project, with the initial setups (esp pushing into Raspberry Pi) being a bit complex, so see that project for the how-to as well as discussion of details of the code, etc. As of May 2023, this repo is ahead of Hackaday project,
+The project is documented in longer form in the Hackaday.io project [Pose2Art: SmartCam to TouchDesigner, Unity via OSC](https://hackaday.io/project/188345-pose2art-smartcam-to-touchdesigner-unity-via-osc).  It is an evolving project, with the initial setups (esp pushing into Raspberry Pi) being a bit complex, so see that project for the how-to as well as discussion of details of the code, etc. As of June 2023, this repo is ahead of Hackaday project,
 
 See related repo [pyUdpTest](https://github.com/MauiJerry/pyUdpTest) for udp sender/receiver tests. These can be used to test both the udp connection, and as receiver of OSC messages. (TL:DR turn off windows defender)
 
@@ -11,6 +11,8 @@ Initially, one of two OpenCV+PoseEsitimation tools capture frames, extract Pose 
 - **pose_rPi_TFLite.cpp** is raspberryPi4 c++ program, sending 17 landmarks  
 - **poseOSC_dots.toe** is a simple TouchDesigner app that reads the osc landmark messages and displays them as dots.
 - **pose_OSC_Sender.py** is a python app for testing OSC Messages. Initially it sends 17 or 33 landmarks plus the Frame messages. A sendBundle() is provided to test if receivers can handle OSC Bundles.
+
+I moved the raspberry pi python code into a subfolder (rPi_prototypes)
 
 May2023: 
 - created **pose_detector** package (subfolder) 
@@ -34,7 +36,7 @@ June 2023:
     * landmarksAsGeom_wNDI.toe - similar to sphere, also rcvs video via NDI
     * handsAsEmitters.toe - particle emitters at hand tips (vid save to file)
     * OSC_TubularTrim.toe - make flat/tube skeleton between landmarks
-    * osc_fluidHand.toe - beginnings of putting a fluid  emitter on hands
+    * osc_fluidHand.toe - fluid emitter on hands using two [Fluid_simulation.tox](https://derivative.ca/community-post/asset/fluid-simulation-component/65741)
 
 A number of explorations are NOT in git at this time.  I've been looking into using GLSL fluid sims, advanced TD Particle sims, etc.  Also potential to have a Pose2Art camera that does Hand Tracking and Gestures.
   
