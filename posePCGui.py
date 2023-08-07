@@ -200,8 +200,13 @@ class PoseApp:
         try:
             if self.video_input_source.get() == g_webcam:
                 print("try open webcam")
+                # ISSUE: 0 is default, but if we have NDI that adds 4, Snap Cam and OBS and USB cams
+                # are also possible but how to select?
                 #self.cap = cv2.VideoCapture(0)
+
                 self.cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+                #self.cap = cv2.VideoCapture(6, cv2.CAP_DSHOW)
+
             elif self.video_input_source.get() == g_file:
                 file_path = self.video_input_file.get()
                 print("try open video file: {}".format(file_path))
@@ -275,6 +280,12 @@ class PoseApp:
                     print("GUI should give error dialog here, update ui")
                     self.stop_video()
                     return
+
+            if self.frameCount % 30:
+                frame_height, frame_width, _  = frame.shape
+                frame_width = int(frame_width)
+                frame_height = int(frame_height)
+                print("video size: {} x {}".format(frame_width, frame_height))
 
             # send the image via NDI
             if self.ndi_send is not None:
