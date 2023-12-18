@@ -4,6 +4,12 @@ Pose2Art creates an AI Camera that can run on small 'edge' device that extract P
 
 The project is documented in longer form in the Hackaday.io project [Pose2Art: SmartCam to TouchDesigner, Unity via OSC](https://hackaday.io/project/188345-pose2art-smartcam-to-touchdesigner-unity-via-osc).  It is an evolving project, with the initial setups (esp pushing into Raspberry Pi) being a bit complex, so see that project for the how-to as well as discussion of details of the code, etc. As of June 2023, this repo is ahead of Hackaday project,
 
+![Pose2Art Concept](https://photos.app.goo.gl/y4pmms1N1JPyVgMf6)
+
+![Quick Video Demo1](https://photos.app.goo.gl/uPo9WM19AiW8XYXp8)
+
+![Video with Fluid Sim](https://photos.app.goo.gl/8rxi97qLAv2Bf4Fq8)
+
 See related repo [pyUdpTest](https://github.com/MauiJerry/pyUdpTest) for udp sender/receiver tests. These can be used to test both the udp connection, and as receiver of OSC messages. (TL:DR turn off windows defender)
 
 There are a couple tools to implement the pose capture and sending OSC, along with a number of TouchDesigner applications that utilize the messages.
@@ -14,7 +20,7 @@ There are a couple tools to implement the pose capture and sending OSC, along wi
     - **pose_detector.py**: PoseDetector base class
 	- **pose_detector_mediapipe**: PoseDetectorMediapipe version
 	- **alphapose.py** : stub that might support alphapose
-  
+
 Sample TouchDesigner apps:
 - **poseOSC_dots.toe** is a simple TouchDesigner app that reads the osc landmark messages and displays them as dots.
 - **pose_OSC_Sender.py** is a python app for testing OSC Messages. Initially it sends 17 or 33 landmarks plus the Frame messages. A sendBundle() is provided to test if receivers can handle OSC Bundles.
@@ -33,9 +39,9 @@ The **testScripts folder** holds scaffolding test tools
     * testMediaPipe.py: tests PoseDetectorMediapipe with webcam
     * testMediaPipeFile.py: tests PoseDetectorMediapipe with video file
     * udpServerPrint.py: udp socket server prints data received
- 
+
 A number of explorations are NOT in git at this time. Mostly these are various TouchDesigner apps that explore different effects off the skeleton.  I've also been looking into alternative Pose2Art cameras that can do multiple person and/or Hand Tracking and Gestures recognition.
-  
+
 # Critique
 
 Initially there were 2 hardware SmartCamera for Pose_OSC: a PC's webcam and raspberryPi4.  The PC can do a respectable frame rate with decent graphics board. My PC webcam gets about 28fps, which is decent. The rPi4 about 8-9fps, which is not good enough for interactive work.  Maybe the Jetson Nano or Coral dev boards will be better.  Meanwhile, we at least have a path for getting ML data into TouchDesigner via OSC.  This method could be extended for multiple person tracking (on fast hardware), object detection or other ML processing. The OSC messages will need to change for those new applications, so when you fork this, document them ;-)
