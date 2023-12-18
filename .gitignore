@@ -8,6 +8,7 @@ tests/
 videos/
 
 */__pycache__
+./__pycache__
 
 # from rPi git (c++ etc)
 bin/
