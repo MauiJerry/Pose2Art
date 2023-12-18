@@ -4,11 +4,9 @@ Pose2Art creates an AI Camera that can run on small 'edge' device that extract P
 
 The project is documented in longer form in the Hackaday.io project [Pose2Art: SmartCam to TouchDesigner, Unity via OSC](https://hackaday.io/project/188345-pose2art-smartcam-to-touchdesigner-unity-via-osc).  It is an evolving project, with the initial setups (esp pushing into Raspberry Pi) being a bit complex, so see that project for the how-to as well as discussion of details of the code, etc. As of June 2023, this repo is ahead of Hackaday project,
 
-![Pose2Art Concept](https://photos.app.goo.gl/y4pmms1N1JPyVgMf6)
+![Pose2Art System Diagram](./demoVideos/Pose2ArtSystemDiagram.jpg)
 
-![Quick Video Demo1](https://photos.app.goo.gl/uPo9WM19AiW8XYXp8)
-
-![Video with Fluid Sim](https://photos.app.goo.gl/8rxi97qLAv2Bf4Fq8)
+[G.Photos Album for Pose2Art with demo videos](https://photos.app.goo.gl/w3xXujWq4d156rJC7)
 
 See related repo [pyUdpTest](https://github.com/MauiJerry/pyUdpTest) for udp sender/receiver tests. These can be used to test both the udp connection, and as receiver of OSC messages. (TL:DR turn off windows defender)
 
