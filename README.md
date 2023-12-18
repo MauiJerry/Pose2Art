@@ -6,7 +6,7 @@ The project is documented in longer form in the Hackaday.io project [Pose2Art: S
 
 ![Pose2Art System Diagram](./demoVideos/Pose2ArtSystemDiagram.jpg)
 
-[G.Photos Album for Pose2Art with demo videos](https://photos.app.goo.gl/w3xXujWq4d156rJC7)
+ <a href="https://photos.app.goo.gl/w3xXujWq4d156rJC7" target="_blank">Album for Pose2Art demo videos</a> 
 
 See related repo [pyUdpTest](https://github.com/MauiJerry/pyUdpTest) for udp sender/receiver tests. These can be used to test both the udp connection, and as receiver of OSC messages. (TL:DR turn off windows defender)
 
