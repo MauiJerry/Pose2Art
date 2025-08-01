@@ -8,6 +8,14 @@ The project is documented in longer form in the Hackaday.io project [Pose2Art: S
 
  <a href="https://photos.app.goo.gl/w3xXujWq4d156rJC7" target="_blank">Album for Pose2Art demo videos</a> 
 
+---
+
+July 2025 - resurrecting this project after 2y. Some rearrangement of folders and archiving of older tools.  Private notes in parent directory (not git repo'd) detail update.  
+
+Text below this is from older README.  Need info on How to run.
+
+----
+
 See related repo [pyUdpTest](https://github.com/MauiJerry/pyUdpTest) for udp sender/receiver tests. These can be used to test both the udp connection, and as receiver of OSC messages. (TL:DR turn off windows defender)
 
 There are a couple tools to implement the pose capture and sending OSC, along with a number of TouchDesigner applications that utilize the messages.

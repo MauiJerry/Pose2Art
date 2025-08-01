@@ -1,0 +1,6 @@
+@echo off
+echo Activating virtual environment...
+call venv\Scripts\activate.bat
+echo.
+echo Starting PoseApp...
+python posePC_multicam.py

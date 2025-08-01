@@ -9,6 +9,9 @@ videos/
 
 */__pycache__
 ./__pycache__
+*/venv/
+*/.idea/
+*/.vscode/
 
 # from rPi git (c++ etc)
 bin/
