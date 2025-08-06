@@ -1,0 +1,27 @@
+# Python dependencies for the Pose2Art project
+# Generated based on imported modules in the provided Python files.
+# Updated to include libraries for MediaPipe, OpenPose, MoveNet, and YOLOv8.
+
+# You can use this file to install all necessary dependencies by running
+# pip install -r requirements.txt 
+# in your project's virtual environment.
+
+opencv-python
+mediapipe>=0.10.0
+python-osc
+Pillow
+#ndi python requires build from modified src, so before this, install from wheel 
+numpy
+pygrabber
+
+tensorflow           # For MoveNet
+ultralytics          # For YOLOv8
+
+# --- IMPORTANT NOTES FOR OPENPOSE ---
+# OpenPose is typically installed from source or pre-built binaries,
+# and its Python bindings might require specific OpenCV versions or build configurations.
+# It's not usually installed via pip directly in the same way as other libraries.
+# Refer to the official OpenPose GitHub for detailed installation instructions:
+# https://github.com/CMU-Perceptual-Computing-Lab/openpose
+# You might need to build it with Python bindings enabled.
+
