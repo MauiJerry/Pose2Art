@@ -13,6 +13,8 @@ videos/
 */.idea/
 */.vscode/
 
+python/*/__pycache__/
+
 # from rPi git (c++ etc)
 bin/
 obj/
